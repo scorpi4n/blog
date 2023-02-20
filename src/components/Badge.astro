@@ -1,0 +1,26 @@
+---
+interface Props {
+	backgroundColor?: string;
+	textColor?: string;
+}
+
+const { backgroundColor, textColor } = Astro.props;
+---
+
+<span><slot /></span>
+
+<style lang="scss" define:vars={{ backgroundColor, textColor }}>
+	span {
+		display: inline-block;
+		margin-right: 0.5rem;
+		padding: 0.25rem;
+		border-radius: 0.25rem;
+		background-color: var(--backgroundColor, black);
+		color: var(--textColor, white);
+		font-size: 0.9em;
+
+		:global(:is(*, a)) {
+			all: unset;
+		}
+	}
+</style>
