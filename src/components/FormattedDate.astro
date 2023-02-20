@@ -2,6 +2,10 @@
 import { format } from "date-fns";
 
 const { date } = Astro.props;
+
+interface Props {
+	date: Date;
+}
 ---
 
 <time datetime={date.toISOString()}>
