@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Badge from "./Badge.astro";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+	post: CollectionEntry<"blog">;
+}
+
+const { data, slug } = Astro.props.post;
+const { title, description, pubDate, tags } = data;
+---
+
+<div class="wrapper">
+	<div class="flex">
+		<div>
+			<h3><a href={`/posts/${slug}`}>{title}</a></h3>
+			<FormattedDate date={pubDate} />
+		</div>
+		<div>
+			{
+				tags.map(tag => (
+					<Badge backgroundColor="white" textColor="#222">
+						{tag}
+					</Badge>
+				))
+			}
+		</div>
+	</div>
+	<p>{description}</p>
+</div>
+
+<style lang="scss">
+	.wrapper {
+		// max-width: ;
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background-color: #222;
+
+		:is(*, p) {
+			color: #fff;
+		}
+	}
+
+	.flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	h3 {
+		margin: 0;
+	}
+</style>
