@@ -1,8 +1,12 @@
 ---
+import { getCollection } from "astro:content";
+import Card from "../components/Card.astro";
 import Layout from "../layouts/Default.astro";
 
 const topLink = "https://theodinproject.com";
 const certLink = "https://www.comptia.org/certifications/a";
+
+const posts = await getCollection("blog");
 ---
 
 <Layout>
@@ -22,7 +26,8 @@ const certLink = "https://www.comptia.org/certifications/a";
 
 	<div>
 		<br />
-		This will be a card slider or something to show off some of my recent posts!
+		<!-- This will be a card slider or something to show off some of my recent posts! -->
+		{posts.map(post => <Card post={post} />)}
 	</div>
 </Layout>
 
