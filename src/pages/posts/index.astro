@@ -2,17 +2,19 @@
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Layout from "../../layouts/Default.astro";
+import { sortPosts } from "../../ts/utils";
 
-const posts = (await getCollection("blog")).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getCollection("blog");
+const sortedPosts = sortPosts(posts, {
+	hasDrafts: true,
+});
 ---
 
 <Layout>
 	<section>
 		<ul>
 			{
-				posts.map(post => (
+				sortedPosts.map(post => (
 					<li>
 						<a href={`/posts/${post.slug}`}>{post.data.title}</a>
 						<p>{post.data.description}</p>
