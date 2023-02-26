@@ -2,19 +2,18 @@
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Layout from "../../layouts/Default.astro";
-import { sortPosts } from "../../ts/utils";
+import { filterPosts, sortPosts } from "../../ts/utils";
 
 const posts = await getCollection("blog");
-const sortedPosts = sortPosts(posts, {
-	hasDrafts: true,
-});
+const filteredPosts = filterPosts(posts, { removeDrafts: false });
+const sortedPosts = sortPosts(filteredPosts);
 ---
 
 <Layout>
 	<section>
 		<ul>
 			{
-				sortedPosts.map(post => (
+				filteredPosts.map(post => (
 					<li>
 						<a href={`/posts/${post.slug}`}>{post.data.title}</a>
 						<p>{post.data.description}</p>
