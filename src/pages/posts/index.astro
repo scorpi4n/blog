@@ -13,7 +13,7 @@ const sortedPosts = sortPosts(filteredPosts);
 	<section>
 		<ul>
 			{
-				filteredPosts.map(post => (
+				sortedPosts.map(post => (
 					<li>
 						<a href={`/posts/${post.slug}`}>{post.data.title}</a>
 						<p>{post.data.description}</p>
