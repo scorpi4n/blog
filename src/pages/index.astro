@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Default.astro";
+import { sortPosts } from "../ts/utils";
 
 const topLink = "https://theodinproject.com";
 const certLink = "https://www.comptia.org/certifications/a";
@@ -24,14 +25,12 @@ const posts = await getCollection("blog");
 	</p>
 	<a href="/about" class="btn">About me!</a>
 
-	<div>
-		<br />
-		<!-- This will be a card slider or something to show off some of my recent posts! -->
-		{posts.map(post => <Card post={post} />)}
+	<div class="posts-display">
+		{sortPosts(posts).map(post => <Card post={post} />)}
 	</div>
 </Layout>
 
-<style>
+<style lang="scss">
 	span {
 		color: steelblue;
 		font-size: 1.25em;
@@ -45,5 +44,13 @@ const posts = await getCollection("blog");
 		background-color: steelblue;
 		padding: 0.5rem 1rem;
 		border-radius: 100vw;
+	}
+
+	.posts-display {
+		margin-top: 1rem;
+
+		:global(> div) {
+			margin-bottom: 1rem;
+		}
 	}
 </style>
